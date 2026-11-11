@@ -95,6 +95,8 @@ chmod +x install.sh
 ## 🎓 Want to Build, Architect & Sell Real AI Apps? (كورس مهندس التطبيقات والـ AI Agents)
 If you want the complete step-by-step system to go from **Raw Idea → Clean Architecture → Google Stitch UI → RAG & Agentic Backend → Automated QA & GitHub CI/CD → Stripe/Paymob Payments → Closing $1,000+ B2B Clients**:
 
+👉 **Join the Founders Cohort Waitlist (50% Off): [https://khalladd.com/course-registeration/](https://khalladd.com/course-registeration/)**
+
 - 📺 **YouTube:** [@Khallad-tech](https://www.youtube.com/@Khallad-tech)
 - 📸 **Instagram:** [@khallad_tech](https://www.instagram.com/khallad_tech/)
 - 🎵 **TikTok:** [@khallad.tech](https://www.tiktok.com/@khallad.tech)
