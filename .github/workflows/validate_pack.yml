@@ -1,0 +1,49 @@
+name: Validate AI Agent Skills & Agents Pack
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-skills-and-agents:
+    name: 🛡️ Lint Skills, Agents YAML Frontmatter & Installer Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🧪 Verify Skills & Agents Frontmatter & Structure
+        run: |
+          python3 -c '
+          import glob, sys
+
+          skills = sorted(glob.glob("skills/*/SKILL.md"))
+          agents = sorted(glob.glob("agents/*.md"))
+          assert len(skills) >= 9, f"Expected >= 9 skills, found {len(skills)}"
+          assert len(agents) >= 5, f"Expected >= 5 agents, found {len(agents)}"
+
+          for path in skills + agents:
+              with open(path, "r", encoding="utf-8") as f:
+                  text = f.read()
+              if not (text.startswith("---\n") and "\n---\n" in text[4:]):
+                  print(f"FAIL: Missing YAML frontmatter in {path}")
+                  sys.exit(1)
+              if "name:" not in text or "description:" not in text:
+                  print(f"FAIL: Missing name/description in {path}")
+                  sys.exit(1)
+              print(f"PASS: {path}")
+          '
+
+      - name: 💻 Test 1-Command Installer (install.sh)
+        run: |
+          bash -n install.sh
+          chmod +x install.sh
+          ./install.sh --project
+          test -d "$HOME/.gemini/config/skills/01_clean_architecture_guard"
+          test -d "$HOME/.gemini/config/skills/07_acid_transactions_and_outbox"
+          test -d "$HOME/.gemini/config/skills/08_free_production_monitoring"
+          test -d "$HOME/.gemini/config/skills/09_github_cicd_and_gitflow"
+          test -f "$HOME/.gemini/config/agents/solution-architect.md"
+          test -f "./AGENTS.md"
